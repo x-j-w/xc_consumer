@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <artifactId>xc_consumer_server</artifactId>
+    <parent>
+    <artifactId>xc_consumer</artifactId>
+    <groupId>com.daling.consumer</groupId>
+    <version>1.0.0</version>
+  </parent>
+    <packaging>jar</packaging>
+    <modelVersion>4.0.0</modelVersion>
+
+    <dependencies>
+        <!-- api模块 -->
+        <dependency>
+            <groupId>com.daling.consumer</groupId>
+            <artifactId>xc_consumer_api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.daling.producer</groupId>
+            <artifactId>xc_producer_api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 架构组 配置中心、注册中心、监控,  接入配置中心、注册中心、监控的时候放开-->
+        <!--<dependency>-->
+            <!--<groupId>com.daling.framework</groupId>-->
+            <!--<artifactId>daling-apollo-client-starter</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.daling.framework</groupId>-->
+            <!--<artifactId>daling-metrics-starter</artifactId>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>com.daling.framework</groupId>
+            <artifactId>daling-feign-starter</artifactId>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-consul-discovery</artifactId>-->
+        <!--</dependency>-->
+
+        <!-- web undertow 替换tomcat -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <!-- 跳过打包 -->
+    <build>
+        <finalName>xc_consumer</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.daling.consumer.Application</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

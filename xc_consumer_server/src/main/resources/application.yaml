@@ -1,0 +1,26 @@
+server:
+  port: 8889
+  servlet:
+    context-path: /xc_consumer
+
+spring:
+  application:
+    name: xcconsumer
+  profiles:
+    active: @activatedProfile@
+
+#----------------------接入配置中心配置,接入配置中心的时候放开-------------------
+#app:
+#  id: xcconsumer  #项目在配置中心定义的ID
+#apollo:
+#  env: @apollo.env@
+#  cluster: @activatedProfile@
+#  bootstrap:
+#    eagerLoad:
+#      enabled: true
+#    enabled: true
+#    #配置中心创建的命名空间，多个以逗号','形式隔开
+#    namespaces: application,ns-consul-@activatedProfile@,common-metrics-@apollo.env@
+#  daling:
+#    #必须要添加该配置, 值可空着
+#    namespaces:

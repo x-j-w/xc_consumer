@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- parent -->
+    <parent>
+        <groupId>com.daling.framework</groupId>
+        <artifactId>daling-framework-starter-parent</artifactId>
+        <version>0.0.3.25</version>
+    </parent>
+
+    <!-- 用户创建项目时手动输入的groupId,actifactId,version -->
+    <groupId>com.daling.consumer</groupId>
+    <artifactId>xc_consumer</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 项目模块 -->
+    <modules>
+        <module>xc_consumer_api</module>
+        <module>xc_consumer_server</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.daling.consumer</groupId>
+                <artifactId>xc_consumer_api</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>com.daling.producer</groupId>-->
+                <!--<artifactId>xc_producer_api</artifactId>-->
+                <!--<version>1.0.0</version>-->
+            <!--</dependency>-->
+        </dependencies>
+    </dependencyManagement>
+
+    <!--<dependencies>-->
+        <!--<dependency>-->
+            <!--<groupId>com.daling.producer</groupId>-->
+            <!--<artifactId>xc_producer_api</artifactId>-->
+        <!--</dependency>-->
+    <!--</dependencies>-->
+
+
+    <profiles>
+        <profile>
+            <id>default</id>
+            <properties>
+                <apollo.env>dev</apollo.env>
+                <activatedProfile>default</activatedProfile>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+</project>

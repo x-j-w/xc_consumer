@@ -1,0 +1,68 @@
+# 端口
+server:
+  port: 8080
+#-------------注册中心配置模板(使用详见：http://home.corp.daling.com/pages/viewpage.action?pageId=15212857)-------------
+spring:
+  cloud:
+    consul:
+      host: 127.0.0.1 #测试环境需要自调
+      port: 8500 #端口
+      discovery:
+        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port} #服务唯一id
+        health-check-path: ${server.servlet.context-path}/inner/dmonitor/check.do #健康检查地址
+        health-check-interval: 1s #健康检查间隔
+        health-check-timeout: 1s #健康检查超时时间
+        health-check-critical-timeout: 30m #超过30m将此服务从UI剔除
+        prefer-ip-address: true #优先注册ip
+        tags: ${spring.profiles.active} #环境标签
+        default-query-tag: ${spring.cloud.consul.discovery.tags} #默认查询标签
+        query-passing: true #只查询健康服务
+
+daling:
+#-------------redis多数据源配置模板(使用相见：http://home.corp.daling.com/display/PMWIKI/redis-starter)-------------
+  redis:
+    default: #为连接配置名称
+      primary: true #默认为false,若指定为true,将此连接设置为主要的连接,即默认连接，primary为true不允许有多个存在
+      host: a-redis1.qa.bj4.daling.com
+      port: 6379
+      database: 0
+    lock: #连接配置名称 此数据源为分布式锁数据源（可自行配置，也可以用主数据源，使用方式见实例代码）
+      host: a-redis1.dev.bj4.daling.com
+      port: 6379 #默认为6379
+      database: 0
+#-------------数据库多数据源配置模板(使用详见：http://home.corp.daling.com/display/PMWIKI/database-starter)-------------
+  database:
+    dbOne:
+      primary: true             #默认数据源必须配置   此配置为true则为项目的默认数据源,（其他非默认数据源可不配置或配置为false,如出现多个true则取随机）
+      username: daling_app_rw   #必须配置
+      password: 1234@Daling     #必须配置
+      url: jdbc:mysql://a.mysql.qa.daling.com:3306/xc_growth_db?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true #必须配置
+      maxActive: 16            #若不配置则默认为16（druid原生默认为8，这里覆盖了原生默认值）
+    #只有一个数据源的情况下面配置不用写
+    dbTwo:
+      username: daling_app_rw
+      password: 1234@Daling
+      url: jdbc:mysql://b.mysql.qa.daling.com:3306/xc_growth_db?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+      initialSize: 30
+      minIdle: 20
+      maxActive: 100
+      maxWait: 3000
+      minEvictableIdleTimeMillis: 30000
+#-----------rabbitmq的多数据源配置模板(使用详见：http://home.corp.daling.com/display/PMWIKI/rabbitmq-starter) ----------
+  rabbitmq:
+    ucenter:   #数据源的名称(必须唯一，见名知意)
+      primary: true # 默认false 配置为true时，则代表为主数据源
+      host: s-rabbitmq1.qa.bj4.daling.com
+      port: 5672
+      username: daling
+      password: daling
+      virtualHost: /erp_betaa
+    #如果是单数据源，只需要配置第一个数据源
+    shop:
+      host: s-rabbitmq1.qa.bj4.daling.com
+      port: 5672
+      username: daling
+      password: daling
+      virtualHost: /erp_betab
+
+
